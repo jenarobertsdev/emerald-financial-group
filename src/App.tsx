@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 // import About from "./pages/About";
 // import HowWeHelp from "./pages/HowWeHelp";
 import Contact from "./pages/Contact";
+import OurProcess from "./pages/OurProcess";
+import FAQs from "./pages/FAQs";
+import AboutKarenRoberts from "./pages/AboutKarenRoberts";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +23,18 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/our-process",
+    element: <OurProcess />,
+  },
+  {
+    path: "/faqs",
+    element: <FAQs />,
+  },
+  {
+    path: "/about-karen-roberts",
+    element: <AboutKarenRoberts />,
   },
 ]);
 

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 function Hero() {
   return (
-    <section className="relative w-full flex-1 overflow-hidden">
+    <section className="relative w-full h-full overflow-hidden">
       {/* Video Background */}
       <video
         autoPlay
@@ -35,8 +35,8 @@ function Hero() {
           <Link
             to="/contact"
             className={cn(
-              "inline-block px-8 py-4 md:px-10 md:py-5 rounded-md",
-              "bg-[#f78f21] text-white font-sans text-lg md:text-xl font-medium",
+              "inline-block px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-md",
+              "bg-[#f78f21] text-white font-sans text-base md:text-lg lg:text-xl font-medium",
               "hover:bg-[#009448]",
               "transition-colors"
             )}
