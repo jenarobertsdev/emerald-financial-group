@@ -1,8 +1,74 @@
+import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Facebook, Linkedin, Youtube } from "lucide-react";
 
 function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: "Thank you! Your message has been sent successfully.",
+        });
+        // Reset form
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.error || "Failed to send message. Please try again.",
+        });
+      }
+    } catch {
+      setSubmitStatus({
+        type: "error",
+        message: "An error occurred. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="relative w-full py-12 md:py-16 lg:py-20 xl:py-24 overflow-hidden">
       {/* Background Image */}
@@ -97,42 +163,74 @@ function ContactSection() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white font-sans mb-4 md:mb-6">
               Get in Touch
             </h2>
-            <form className="space-y-3 md:space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Your name"
+                required
                 className="w-full px-3 py-3 md:px-4 md:py-4 bg-white/50 border border-white/30 rounded-md text-sm md:text-base text-gray-900 placeholder-gray-500 font-sans focus:outline-none focus:bg-white/60"
               />
               <input
                 type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 placeholder="Phone"
                 className="w-full px-3 py-3 md:px-4 md:py-4 bg-white/50 border border-white/30 rounded-md text-sm md:text-base text-gray-900 placeholder-gray-500 font-sans focus:outline-none focus:bg-white/60"
               />
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Your email address"
+                required
                 className="w-full px-3 py-3 md:px-4 md:py-4 bg-white/50 border border-white/30 rounded-md text-sm md:text-base text-gray-900 placeholder-gray-500 font-sans focus:outline-none focus:bg-white/60"
               />
               <input
                 type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
                 placeholder="Subject"
                 className="w-full px-3 py-3 md:px-4 md:py-4 bg-white/50 border border-white/30 rounded-md text-sm md:text-base text-gray-900 placeholder-gray-500 font-sans focus:outline-none focus:bg-white/60"
               />
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Message"
                 rows={5}
+                required
                 className="w-full px-3 py-3 md:px-4 md:py-4 bg-white/50 border border-white/30 rounded-md text-sm md:text-base text-gray-900 placeholder-gray-500 font-sans focus:outline-none focus:bg-white/60 resize-none"
               />
+              {submitStatus.type && (
+                <div
+                  className={cn(
+                    "px-4 py-3 rounded-md text-sm md:text-base font-sans",
+                    submitStatus.type === "success"
+                      ? "bg-green-500/90 text-white"
+                      : "bg-red-500/90 text-white"
+                  )}
+                >
+                  {submitStatus.message}
+                </div>
+              )}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className={cn(
                   "px-6 py-3 md:px-8 md:py-3 rounded-md w-full md:w-auto",
                   "bg-[#f78f21] text-white font-sans text-sm md:text-base font-medium",
                   "hover:bg-[#009448]",
-                  "transition-colors"
+                  "transition-colors",
+                  isSubmitting && "opacity-50 cursor-not-allowed"
                 )}
               >
-                Send
+                {isSubmitting ? "Sending..." : "Send"}
               </button>
             </form>
           </div>
