@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import OurProcess from "./pages/OurProcess";
 import FAQs from "./pages/FAQs";
 import AboutKarenRoberts from "./pages/AboutKarenRoberts";
+import BrokerCheck from "./components/BrokerCheck";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <BrokerCheck />
+    </>
+  );
 }
 
 export default App;
