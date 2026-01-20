@@ -138,19 +138,25 @@ function ContactSection() {
             </div>
             <div className="flex gap-3">
               <a
-                href="#"
+                href="https://www.facebook.com/TheEmeraldFinancialGroup"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800/50 border border-white/30 rounded flex items-center justify-center hover:bg-gray-800/70 transition-colors"
               >
                 <Facebook className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/karen-k-roberts/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800/50 border border-white/30 rounded flex items-center justify-center hover:bg-gray-800/70 transition-colors"
               >
                 <Linkedin className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@theemeraldfinancialgroup5110"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800/50 border border-white/30 rounded flex items-center justify-center hover:bg-gray-800/70 transition-colors"
               >
                 <Youtube className="w-5 h-5 text-white" />
